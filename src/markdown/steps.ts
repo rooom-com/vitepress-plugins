@@ -42,13 +42,11 @@ export function stepByStepPlugin(md: MarkdownIt): void {
 
   const defaultHeadingOpen =
     md.renderer.rules.heading_open ??
-    ((tokens: Token[], idx: number, options: unknown, _env: unknown, self: MarkdownIt['renderer']) =>
-      self.renderToken(tokens, idx, options as MarkdownIt.Options));
+    ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
 
   const defaultHeadingClose =
     md.renderer.rules.heading_close ??
-    ((tokens: Token[], idx: number, options: unknown, _env: unknown, self: MarkdownIt['renderer']) =>
-      self.renderToken(tokens, idx, options as MarkdownIt.Options));
+    ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
 
   md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
     const token = tokens[idx];
