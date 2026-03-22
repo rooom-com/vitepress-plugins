@@ -1,0 +1,71 @@
+{
+  "name": "vitepress-plugins",
+  "version": "1.0.0",
+  "description": "A collection of VitePress plugins: markdown-it extensions for accordion, cards, steps, Lucide icons, and more.",
+  "author": "rooom AG",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rooom-com/vitepress-plugins.git"
+  },
+  "homepage": "https://github.com/rooom-com/vitepress-plugins#readme",
+  "keywords": [
+    "vitepress",
+    "markdown-it",
+    "plugin",
+    "accordion",
+    "cards",
+    "steps",
+    "lucide",
+    "docs"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./markdown": {
+      "import": "./dist/markdown.js",
+      "require": "./dist/markdown.cjs",
+      "types": "./dist/markdown.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "prepublishOnly": "npm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "markdown-it": ">=13.0.0",
+    "vitepress": ">=1.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vitepress": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "lucide": "^0.577.0",
+    "markdown-it-container": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.0.0",
+    "markdown-it": "^14.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.9.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
