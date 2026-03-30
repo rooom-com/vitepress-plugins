@@ -1,5 +1,5 @@
 {
-  "name": "vitepress-plugins",
+  "name": "@rooom/vitepress-plugins",
   "version": "1.0.0",
   "description": "A collection of VitePress plugins: markdown-it extensions for accordion, cards, steps, Lucide icons, and more.",
   "author": "rooom AG",
@@ -67,5 +67,8 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }
