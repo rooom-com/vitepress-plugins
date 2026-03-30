@@ -44,7 +44,10 @@
     "build": "tsup",
     "build:watch": "tsup --watch",
     "prepublishOnly": "npm run build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "release:patch": "npm version patch && git push --follow-tags",
+    "release:minor": "npm version minor && git push --follow-tags",
+    "release:major": "npm version major && git push --follow-tags"
   },
   "peerDependencies": {
     "markdown-it": ">=13.0.0",
