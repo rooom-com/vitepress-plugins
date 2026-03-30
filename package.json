@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rooom-com/vitepress-plugins.git"
+    "url": "git+https://github.com/rooom-com/vitepress-plugins.git"
   },
   "homepage": "https://github.com/rooom-com/vitepress-plugins#readme",
   "keywords": [
