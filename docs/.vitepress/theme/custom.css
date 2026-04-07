@@ -1,0 +1,126 @@
+/* ─── Accordion ─────────────────────────────────────────────────── */
+.accordion-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 1rem 0;
+}
+
+.accordion-item {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accordion-title {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  list-style: none;
+  user-select: none;
+  background: var(--vp-c-bg-soft);
+  transition: background 0.15s;
+}
+.accordion-title:hover { background: var(--vp-c-bg-mute); }
+
+.accordion-content {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--vp-c-divider);
+}
+.accordion-content > :first-child { margin-top: 0; }
+.accordion-content > :last-child  { margin-bottom: 0; }
+
+/* ─── Cards ──────────────────────────────────────────────────────── */
+.md-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.md-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+a.md-card:hover {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+}
+
+.md-card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.md-card-title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  padding: 0;
+}
+.md-card-body { display: flex; flex-direction: column; gap: 0.25rem; }
+.md-card-content > :first-child { margin-top: 0; }
+.md-card-content > :last-child  { margin-bottom: 0; }
+
+/* ─── Steps ──────────────────────────────────────────────────────── */
+.steps-container { margin: 1.5rem 0; }
+.steps-wrapper   { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.step-item {
+  display: flex;
+  gap: 1rem;
+}
+
+.step-badge {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--vp-c-brand-1);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-top: 2px;
+}
+
+.step-content { flex: 1; }
+.step-title   { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 700; }
+
+/* ─── Lucide Icons ────────────────────────────────────────────────── */
+.lucide-icon {
+  display: inline-block;
+  vertical-align: -0.15em;
+  width: 1em;
+  height: 1em;
+}
+
+/* ─── One-Liner ───────────────────────────────────────────────────── */
+.api-value-block {
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.9em;
+  padding: 0.6rem 1rem;
+  background: var(--vp-c-bg-soft);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  word-break: break-all;
+  margin: 1rem 0;
+}
+
+/* ─── Page Subtitle ───────────────────────────────────────────────── */
+.page-subtitle {
+  color: var(--vp-c-text-2);
+  font-size: 1.125rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1.5rem;
+}
