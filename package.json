@@ -57,7 +57,7 @@
   },
   "peerDependencies": {
     "markdown-it": ">=13.0.0",
-    "vitepress": ">=1.0.0"
+    "vitepress": ">=1.0.0 || ^2.0.0-0"
   },
   "peerDependenciesMeta": {
     "vitepress": {
