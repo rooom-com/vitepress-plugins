@@ -48,6 +48,18 @@ describe('cardPlugin', () => {
     expect(html).toContain('Celebrate');
   });
 
+  it('renders a card with a Lucide icon fallback for shortcodes not in the emoji map', () => {
+    const html = md.render('::: card :settings: Preferences\nConfigure options.\n:::');
+    expect(html).toContain('<span class="md-card-icon" aria-hidden="true"><svg');
+    expect(html).toContain('lucide-icon');
+    expect(html).toContain('<h3 class="md-card-title">Preferences</h3>');
+  });
+
+  it('keeps an unresolvable shortcode as literal text', () => {
+    const html = md.render('::: card :notanicon: Title\nContent.\n:::');
+    expect(html).toContain('<span class="md-card-icon" aria-hidden="true">:notanicon:</span>');
+  });
+
   it('renders a card without an icon', () => {
     const html = md.render('::: card Plain Title\nNo icon here.\n:::');
     expect(html).toContain('<h3 class="md-card-title">Plain Title</h3>');

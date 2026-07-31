@@ -1,5 +1,8 @@
 import type MarkdownIt from 'markdown-it';
 import container from 'markdown-it-container';
+import * as LucideIcons from 'lucide';
+import type { IconNode } from 'lucide';
+import { kebabToPascal, renderInlineSvg } from './lucide-icons.js';
 
 type Token = ReturnType<MarkdownIt['parse']>[0];
 
@@ -18,7 +21,8 @@ type Token = ReturnType<MarkdownIt['parse']>[0];
  * Description without a link.
  * :::
  *
- * Icon: emoji shortcode (:rocket:) or direct emoji (🚀).
+ * Icon: emoji shortcode (:rocket:), direct emoji (🚀), or — for shortcodes
+ * not in the emoji map — a Lucide icon name (:settings:), rendered as inline SVG.
  * Link: optional, follows a pipe separator: | /path/to/page
  */
 
@@ -38,10 +42,26 @@ const EMOJI_MAP: Record<string, string> = {
   minus: '➖', x: '❌', flag: '🚩', tag: '🏷️',
 };
 
-function resolveEmoji(shortcode: string): string {
+interface ResolvedIcon {
+  html: string;
+  isHtml: boolean;
+}
+
+/** Resolve a `:shortcode:` to an emoji, a Lucide SVG, or the literal shortcode text. */
+function resolveIcon(shortcode: string): ResolvedIcon {
   const match = shortcode.match(/^:([a-z0-9_+-]+):$/i);
-  if (match) return EMOJI_MAP[match[1]] ?? shortcode;
-  return shortcode;
+  if (!match) return { html: shortcode, isHtml: false };
+  const name = match[1];
+
+  const emoji = EMOJI_MAP[name];
+  if (emoji) return { html: emoji, isHtml: false };
+
+  const iconNode = (LucideIcons as Record<string, unknown>)[kebabToPascal(name)] as IconNode | undefined;
+  if (Array.isArray(iconNode) && iconNode.length > 0) {
+    return { html: renderInlineSvg(iconNode), isHtml: true };
+  }
+
+  return { html: shortcode, isHtml: false };
 }
 
 /** Allow safe URL schemes and relative paths; reject protocol-relative URLs. */
@@ -50,7 +70,7 @@ function isSafeHref(url: string): boolean {
   return SAFE_HREF_RE.test(url);
 }
 
-function parseCardInfo(info: string): { icon: string; title: string; link: string } {
+function parseCardInfo(info: string): { icon: string; iconIsHtml: boolean; title: string; link: string } {
   let rest = info.trim().slice('card'.length).trim();
   let link = '';
 
@@ -61,9 +81,12 @@ function parseCardInfo(info: string): { icon: string; title: string; link: strin
   }
 
   let icon = '';
+  let iconIsHtml = false;
   const shortcodeMatch = rest.match(/^(:[a-z0-9_+-]+:)\s*/i);
   if (shortcodeMatch) {
-    icon = resolveEmoji(shortcodeMatch[1]);
+    const resolved = resolveIcon(shortcodeMatch[1]);
+    icon = resolved.html;
+    iconIsHtml = resolved.isHtml;
     rest = rest.slice(shortcodeMatch[0].length).trim();
   } else {
     const emojiMatch = rest.match(/^(\p{Extended_Pictographic}\uFE0F?)\s*/u);
@@ -73,7 +96,7 @@ function parseCardInfo(info: string): { icon: string; title: string; link: strin
     }
   }
 
-  return { icon, title: rest, link };
+  return { icon, iconIsHtml, title: rest, link };
 }
 
 export function cardPlugin(md: MarkdownIt): void {
@@ -91,9 +114,9 @@ export function cardPlugin(md: MarkdownIt): void {
     render(tokens: Token[], idx: number) {
       const token = tokens[idx];
       if (token.nesting === 1) {
-        const { icon, title, link } = parseCardInfo(token.info);
+        const { icon, iconIsHtml, title, link } = parseCardInfo(token.info);
         const safeTitle = md.utils.escapeHtml(title);
-        const safeIcon  = md.utils.escapeHtml(icon);
+        const safeIcon  = iconIsHtml ? icon : md.utils.escapeHtml(icon);
         const safeLink  = md.utils.escapeHtml(link);
         const safe = link && isSafeHref(link);
         const tag  = safe ? 'a' : 'div';

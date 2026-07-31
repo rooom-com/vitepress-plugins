@@ -19,11 +19,7 @@ export function oneLinerPlugin(md: MarkdownIt): void {
   md.renderer.rules.fence = (tokens, idx, options, env, self) => {
     const token = tokens[idx];
     if (token.info.trim() === 'one-line') {
-      const escaped = token.content.trim()
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+      const escaped = md.utils.escapeHtml(token.content.trim());
       return `<div class="api-value-block">${escaped}</div>\n`;
     }
     return defaultFenceRenderer(tokens, idx, options, env, self);

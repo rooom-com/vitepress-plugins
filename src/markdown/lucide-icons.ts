@@ -15,14 +15,14 @@ import type MarkdownIt from 'markdown-it';
 import * as LucideIcons from 'lucide';
 import type { IconNode } from 'lucide';
 
-function kebabToPascal(str: string): string {
+export function kebabToPascal(str: string): string {
   return str
     .split('-')
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join('');
 }
 
-function renderInlineSvg(iconNode: IconNode): string {
+export function renderInlineSvg(iconNode: IconNode): string {
   const children = iconNode
     .map(([tag, attrs]) => {
       const attrStr = Object.entries(attrs)

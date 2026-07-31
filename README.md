@@ -63,7 +63,7 @@ Run `npm install vitepress`.
 
 ### `cardPlugin`
 
-Renders icon cards in a responsive grid. Icons support emoji shortcodes (`:rocket:`) or direct emoji (🚀). Links are optional.
+Renders icon cards in a responsive grid. Icons support emoji shortcodes (`:rocket:`), direct emoji (🚀), or — for shortcodes not in the emoji map — a Lucide icon name (`:settings:`), rendered as inline SVG. Links are optional.
 
 ```md
 :::: cards

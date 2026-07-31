@@ -74,6 +74,24 @@ Use any emoji directly as an icon.
 
 Common shortcodes: `:rocket:` 🚀 · `:book:` 📖 · `:gear:` ⚙️ · `:star:` ⭐ · `:lock:` 🔒 · `:zap:` ⚡ · `:bulb:` 💡 · `:sparkles:` ✨
 
+## Lucide Icon Fallback
+
+Shortcodes that aren't in the emoji map above fall back to a [Lucide](https://lucide.dev) icon of the same name, rendered as inline SVG:
+
+```md
+::: card :settings: Preferences
+Configure your options.
+:::
+```
+
+**Result:**
+
+::: card :settings: Preferences
+Configure your options.
+:::
+
+Full icon list: [lucide.dev/icons](https://lucide.dev/icons/)
+
 ## Link Safety
 
 Only safe URLs are rendered as `<a>` elements. Protocol-relative (`//evil.com`) and `javascript:` URLs are silently downgraded to a `<div>`.
