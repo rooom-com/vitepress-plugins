@@ -1,7 +1,6 @@
 import type MarkdownIt from 'markdown-it';
 import container from 'markdown-it-container';
-
-type Token = ReturnType<MarkdownIt['parse']>[0];
+import { containerParams, type Token } from './utils.js';
 
 /**
  * Accordion plugin for VitePress.
@@ -37,9 +36,7 @@ export function accordionPlugin(md: MarkdownIt): void {
     render: (tokens: Token[], idx: number) => {
       const token = tokens[idx];
       if (token.nesting === 1) {
-        const title = md.utils.escapeHtml(
-          token.info.trim().slice('accordion'.length).trim(),
-        );
+        const title = md.utils.escapeHtml(containerParams(token.info, 'accordion'));
         return (
           `<details class="accordion-item">\n` +
           `<summary class="accordion-title">${title}</summary>\n` +

@@ -1,7 +1,7 @@
 import type MarkdownIt from 'markdown-it';
 import container from 'markdown-it-container';
-
-type Token = ReturnType<MarkdownIt['parse']>[0];
+import { resolveEmoji } from './emoji.js';
+import { containerParams, type Token } from './utils.js';
 
 /**
  * Card plugin for VitePress.
@@ -22,28 +22,6 @@ type Token = ReturnType<MarkdownIt['parse']>[0];
  * Link: optional, follows a pipe separator: | /path/to/page
  */
 
-const EMOJI_MAP: Record<string, string> = {
-  rocket: '🚀', house: '🏠', package: '📦', calendar: '📅',
-  heart: '❤️', star: '⭐', check: '✅', warning: '⚠️',
-  info: 'ℹ️', fire: '🔥', zap: '⚡', lock: '🔒',
-  key: '🔑', globe: '🌍', link: '🔗', code: '💻',
-  terminal: '🖥️', gear: '⚙️', wrench: '🔧', search: '🔍',
-  book: '📖', docs: '📄', page: '📄', api: '🔌',
-  plugin: '🧩', box: '📦', shopping: '🛍️', shopping_bag: '🛍️',
-  target: '🎯', game: '🎮', robot: '🤖', user: '🧑',
-  sparkles: '✨', tada: '🎉', art: '🎨', bulb: '💡',
-  bell: '🔔', email: '📧', phone: '📱', cloud: '☁️',
-  database: '🗄️', chart: '📊', shield: '🛡️', world: '🌐',
-  cube: '🧊', layers: '🗂️', arrow_right: '→', plus: '➕',
-  minus: '➖', x: '❌', flag: '🚩', tag: '🏷️',
-};
-
-function resolveEmoji(shortcode: string): string {
-  const match = shortcode.match(/^:([a-z0-9_+-]+):$/i);
-  if (match) return EMOJI_MAP[match[1]] ?? shortcode;
-  return shortcode;
-}
-
 /** Allow safe URL schemes and relative paths; reject protocol-relative URLs. */
 const SAFE_HREF_RE = /^(?!\/\/)(?:(?:https?|mailto|tel):|[./#])/;
 function isSafeHref(url: string): boolean {
@@ -51,7 +29,7 @@ function isSafeHref(url: string): boolean {
 }
 
 function parseCardInfo(info: string): { icon: string; title: string; link: string } {
-  let rest = info.trim().slice('card'.length).trim();
+  let rest = containerParams(info, 'card');
   let link = '';
 
   const pipeIdx = rest.lastIndexOf(' | ');

@@ -1,13 +1,5 @@
 import { defineConfig } from 'vitepress';
-import {
-  accordionPlugin,
-  cardPlugin,
-  lucideIconPlugin,
-  oneLinerPlugin,
-  pageH1Plugin,
-  pageSubtitlePlugin,
-  stepByStepPlugin,
-} from '../../src/markdown/index.js';
+import { rooomPlugins } from '../../src/markdown/index.js';
 
 export default defineConfig({
   title: 'rooom VitePress Plugins',
@@ -17,13 +9,7 @@ export default defineConfig({
 
   markdown: {
     config(md) {
-      md.use(accordionPlugin);
-      md.use(cardPlugin);
-      md.use(lucideIconPlugin);
-      md.use(oneLinerPlugin);
-      md.use(pageH1Plugin);
-      md.use(pageSubtitlePlugin);
-      md.use(stepByStepPlugin);
+      md.use(rooomPlugins);
     },
   },
 

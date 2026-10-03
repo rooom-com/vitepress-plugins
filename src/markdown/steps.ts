@@ -1,7 +1,6 @@
 import type MarkdownIt from 'markdown-it';
 import container from 'markdown-it-container';
-
-type Token = ReturnType<MarkdownIt['parse']>[0];
+import { getRenderRule, type Token } from './utils.js';
 
 interface StepsEnv {
   stepsContainer?: boolean;
@@ -40,13 +39,8 @@ export function stepByStepPlugin(md: MarkdownIt): void {
     },
   });
 
-  const defaultHeadingOpen =
-    md.renderer.rules.heading_open ??
-    ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
-
-  const defaultHeadingClose =
-    md.renderer.rules.heading_close ??
-    ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
+  const defaultHeadingOpen  = getRenderRule(md, 'heading_open');
+  const defaultHeadingClose = getRenderRule(md, 'heading_close');
 
   md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
     const token = tokens[idx];

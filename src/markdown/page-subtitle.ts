@@ -1,4 +1,5 @@
 import type MarkdownIt from 'markdown-it';
+import { getRenderRule } from './utils.js';
 
 /**
  * Page subtitle from frontmatter plugin for VitePress.
@@ -14,9 +15,7 @@ import type MarkdownIt from 'markdown-it';
  * ---
  */
 export function pageSubtitlePlugin(md: MarkdownIt): void {
-  const defaultHeadingClose =
-    md.renderer.rules.heading_close ??
-    ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
+  const defaultHeadingClose = getRenderRule(md, 'heading_close');
 
   md.core.ruler.push('reset_subtitle_flag', (state) => {
     state.env._subtitleInjected = false;
