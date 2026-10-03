@@ -13,7 +13,26 @@ npm install @rooom/vitepress-plugins
 
 ## Setup
 
-Register the plugins in your `.vitepress/config.mts`:
+Register all plugins at once in your `.vitepress/config.mts`:
+
+```ts
+import { defineConfig } from 'vitepress'
+import { rooomPlugins } from '@rooom/vitepress-plugins/markdown'
+
+export default defineConfig({
+  markdown: {
+    config(md) {
+      md.use(rooomPlugins)
+      // or disable individual plugins:
+      // md.use(rooomPlugins, { lucideIcons: false, pageH1: false })
+    },
+  },
+})
+```
+
+Option keys: `accordion`, `cards`, `lucideIcons`, `oneLiner`, `pageH1`, `pageSubtitle`, `steps`.
+
+Or register plugins individually:
 
 ```ts
 import { defineConfig } from 'vitepress'

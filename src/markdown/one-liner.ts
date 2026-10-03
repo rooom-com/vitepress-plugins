@@ -1,4 +1,5 @@
 import type MarkdownIt from 'markdown-it';
+import { getRenderRule } from './utils.js';
 
 /**
  * One-liner plugin for VitePress.
@@ -12,18 +13,12 @@ import type MarkdownIt from 'markdown-it';
  * ```
  */
 export function oneLinerPlugin(md: MarkdownIt): void {
-  const defaultFenceRenderer =
-    md.renderer.rules.fence ??
-    ((tokens, idx, options, _env, self) => self.renderToken(tokens, idx, options));
+  const defaultFenceRenderer = getRenderRule(md, 'fence');
 
   md.renderer.rules.fence = (tokens, idx, options, env, self) => {
     const token = tokens[idx];
     if (token.info.trim() === 'one-line') {
-      const escaped = token.content.trim()
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+      const escaped = md.utils.escapeHtml(token.content.trim());
       return `<div class="api-value-block">${escaped}</div>\n`;
     }
     return defaultFenceRenderer(tokens, idx, options, env, self);

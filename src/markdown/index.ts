@@ -5,3 +5,4 @@ export { oneLinerPlugin }     from './one-liner.js';
 export { pageH1Plugin }       from './page-h1.js';
 export { pageSubtitlePlugin } from './page-subtitle.js';
 export { stepByStepPlugin }   from './steps.js';
+export { rooomPlugins, type RooomPluginsOptions } from './preset.js';
